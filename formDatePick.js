@@ -198,9 +198,9 @@
 
     const dateTabHd2 = azul.addElement(dateTabHd2Obj);
 
+
         let iconObj = {
             parent: dateTabHd2,
-//            exitEl: menuDiv,
             id: 'movPrevMonth',
             iconType: 'left',
             size: '32',
@@ -220,6 +220,7 @@
             },
         };
 
+
 	let iconLeft = azul.createIcon(iconObj);
 
 	const selObj = {
@@ -233,6 +234,22 @@
 	iconObj.iconType = 'right';
 	let iconRight = azul.createIcon(iconObj);
 
+	iconLeft.clickFun = function() {
+		idx = monthInp.selectedIndex;
+		if (idx>0) {
+			idx--;
+			monthInp.selectedIndex = idx;
+		}
+	}
+
+	iconRight.clickFun = function() {
+		idx = monthInp.selectedIndex;
+		let max = monthInp.options.length -1;
+		if (idx<max) {
+			idx++;
+			monthInp.selectedIndex = idx;
+		}
+	}
 
 
 	const days = ['Mo','Tu','We','Th','Fr','Sa','Su']
@@ -260,6 +277,7 @@
         id: 'datEl',
         className: 'datEls',
         typ: 'div',
+		clickFun: null,
         style: {
 			border: '1px solid black',
 			margin: '1px',
@@ -276,15 +294,22 @@
 
 	for (i=0; i< 7; i++) {
 		dateElObj.textContent = days[i];
+		dateElObj.id = 'datEl' + i;
     	let datesHdEl = azul.addElement(dateElObj);
 	}
 
+
+	let dateClick = function(data) {
+		console.log('date function: ' +data);
+	}
 
 	dateElObj.style.cursor = 'pointer';
 	dateElObj.hovStyle.cursor = 'pointer';
 	let datesEl = [42]
 	for (i=7; i< 49; i++) {
 		dateElObj.textContent = i -6;
+		dateElObj.id = 'datEl' + i;
+		dateElObj.clickFun = dateClick;
     	datesEl[i-7] = azul.addElement(dateElObj);
 	}
 
